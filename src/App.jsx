@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { QUOTES, makeShuffledOrder } from './utils/quoteShuffle'
+import { shareQuote } from './utils/shareQuote'
 
 export default function App() {
   const [order, setOrder] = useState(() => makeShuffledOrder(QUOTES.length))
@@ -34,7 +35,7 @@ export default function App() {
           <p className="author">— {quote.author}</p>
           <div className="actions">
             <button onClick={() => navigator.clipboard?.writeText(`${quote.text} — ${quote.author}`)}>Copy</button>
-            <button onClick={() => alert('Shared! (placeholder)')}>Share</button>
+            <button onClick={() => shareQuote(quote)}>Share</button>
             <button onClick={shuffleNext}>Shuffle</button>
           </div>
         </div>

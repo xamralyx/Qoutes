@@ -13,6 +13,27 @@ export const QUOTES = [
   { text: "Dream big and dare to fail.", author: "Norman Vaughan" },
   { text: "Don’t watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
   { text: "Do something today that your future self will thank you for.", author: "Sean Patrick Flanery" }
+  // Original, short motivational lines to avoid copyright concerns
+  ,{ text: "Small steps every day build remarkable change.", author: "Anonymous" }
+  ,{ text: "Show up, even when it’s hard.", author: "Anonymous" }
+  ,{ text: "Progress over perfection, always.", author: "Anonymous" }
+  ,{ text: "Your future is made from today’s choices.", author: "Anonymous" }
+  ,{ text: "Consistency beats intensity when intensity fades.", author: "Anonymous" }
+  ,{ text: "Start now; momentum follows action.", author: "Anonymous" }
+  ,{ text: "Do the work when no one is watching.", author: "Anonymous" }
+  ,{ text: "Focus on what you can control.", author: "Anonymous" }
+  ,{ text: "One more try changes everything.", author: "Anonymous" }
+  ,{ text: "Learn fast, adjust, continue.", author: "Anonymous" }
+  ,{ text: "Clarity grows with commitment.", author: "Anonymous" }
+  ,{ text: "Believe, begin, become.", author: "Anonymous" }
+  ,{ text: "Discipline is a daily decision.", author: "Anonymous" }
+  ,{ text: "Your effort writes your story.", author: "Anonymous" }
+  ,{ text: "Courage is taking the next step.", author: "Anonymous" }
+  ,{ text: "Create the habit; the habit creates you.", author: "Anonymous" }
+  ,{ text: "Keep going until it clicks.", author: "Anonymous" }
+  ,{ text: "Energy flows where attention goes.", author: "Anonymous" }
+  ,{ text: "Plan less, do more.", author: "Anonymous" }
+  ,{ text: "You’re closer than you think.", author: "Anonymous" }
 ];
 
 // Fisher–Yates shuffle: returns a new shuffled order of indices
