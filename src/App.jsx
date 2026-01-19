@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react'
-
-const DEFAULT_QUOTES = [
-  { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-  { text: "You are never too old to set another goal or to dream a new dream.", author: "C.S. Lewis" },
-  { text: "Start where you are. Use what you have. Do what you can.", author: "Arthur Ashe" }
-]
-
-function getTodaysIndex() {
-  const now = new Date()
-  return Math.abs(Math.floor(now.getTime() / (1000 * 60 * 60 * 24))) % DEFAULT_QUOTES.length
-}
+import React, { useEffect, useMemo, useState } from 'react'
+import { QUOTES, makeShuffledOrder } from './utils/quoteShuffle'
 
 export default function App() {
-  const [quote, setQuote] = useState(DEFAULT_QUOTES[getTodaysIndex()])
+  const [order, setOrder] = useState(() => makeShuffledOrder(QUOTES.length))
+  const [index, setIndex] = useState(0)
+  const quote = useMemo(() => QUOTES[order[index]] || QUOTES[0], [order, index])
 
   useEffect(() => {
-    // placeholder: load remote or personalized quote here
+    // placeholder: could load remote or personalized quotes here
   }, [])
+
+  function shuffleNext() {
+    setIndex((prev) => {
+      const next = prev + 1
+      if (next >= order.length) {
+        // reshuffle once we reach the end
+        setOrder(makeShuffledOrder(QUOTES.length))
+        return 0
+      }
+      return next
+    })
+  }
 
   return (
     <div className="app">
       <header>
         <h1>DailySpark</h1>
-        <p className="subtitle">One personalized motivational quote every day</p>
+        <p className="subtitle">Shuffle through inspiring quotes anytime</p>
       </header>
       <main>
         <div className="quote-card">
@@ -31,6 +35,7 @@ export default function App() {
           <div className="actions">
             <button onClick={() => navigator.clipboard?.writeText(`${quote.text} — ${quote.author}`)}>Copy</button>
             <button onClick={() => alert('Shared! (placeholder)')}>Share</button>
+            <button onClick={shuffleNext}>Shuffle</button>
           </div>
         </div>
       </main>
