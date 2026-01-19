@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, cleanup } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import QuoteCard from '../components/QuoteCard';
 import FavoriteButton from '../components/FavoriteButton';
 import { useFavorites } from '../hooks/useFavorites';
@@ -9,7 +10,7 @@ describe('QuoteCard & FavoriteButton', () => {
   it('renders quote and triggers favorite via QuoteCard', () => {
     const onFavorite = vi.fn();
     const { getByText, getByLabelText } = render(
-      <QuoteCard id="q1" text="hello" author="me" onFavorite={onFavorite} />
+      React.createElement(QuoteCard, { id: 'q1', text: 'hello', author: 'me', onFavorite })
     );
     expect(getByText('hello')).toBeTruthy();
     expect(getByText('me')).toBeTruthy();
@@ -20,8 +21,12 @@ describe('QuoteCard & FavoriteButton', () => {
 
   it('FavoriteButton calls onToggle with id and shows pressed state', () => {
     const onToggle = vi.fn();
-    const { getByRole } = render(<FavoriteButton id="q1" isFav={true} onToggle={onToggle} />);
-    const btn = getByRole('button');
+    // Ensure previous renders don't leak into this test
+    cleanup();
+    const { getByRole, getByLabelText } = render(
+      React.createElement(FavoriteButton, { id: 'q1', isFav: true, onToggle })
+    );
+    const btn = getByLabelText('unfavorite quote');
     fireEvent.click(btn);
     expect(onToggle).toHaveBeenCalledWith('q1');
     expect(btn.getAttribute('aria-pressed')).toBe('true');
@@ -35,9 +40,9 @@ describe('useFavorites', () => {
     render(React.createElement(HookComponent));
     const id = 'test-1';
     expect(result.isFavorite(id)).toBe(false);
-    result.toggleFavorite(id);
+    act(() => { result.toggleFavorite(id); });
     expect(result.isFavorite(id)).toBe(true);
-    result.toggleFavorite(id);
+    act(() => { result.toggleFavorite(id); });
     expect(result.isFavorite(id)).toBe(false);
   });
 });
