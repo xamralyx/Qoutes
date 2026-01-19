@@ -8,7 +8,12 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()));
+self.addEventListener('activate', (event) => event.waitUntil((async () => {
+  // Clean up old caches
+  const keys = await caches.keys();
+  await Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)));
+  await self.clients.claim();
+})()));
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
