@@ -1,11 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { QUOTES, makeShuffledOrder } from './utils/quoteShuffle'
+import { validateQuotes } from './utils/validation'
 import { shareQuote } from './utils/shareQuote'
 
+const SAFE_QUOTES = validateQuotes(QUOTES)
+
 export default function App() {
-  const [order, setOrder] = useState(() => makeShuffledOrder(QUOTES.length))
+  const [order, setOrder] = useState(() => makeShuffledOrder(SAFE_QUOTES.length || 1))
   const [index, setIndex] = useState(0)
-  const quote = useMemo(() => QUOTES[order[index]] || QUOTES[0], [order, index])
+  const quote = useMemo(() => SAFE_QUOTES[order[index]] || { text: 'No quotes available', author: '—' }, [order, index])
 
   useEffect(() => {
     // placeholder: could load remote or personalized quotes here
@@ -16,7 +19,7 @@ export default function App() {
       const next = prev + 1
       if (next >= order.length) {
         // reshuffle once we reach the end
-        setOrder(makeShuffledOrder(QUOTES.length))
+        setOrder(makeShuffledOrder(SAFE_QUOTES.length || 1))
         return 0
       }
       return next
