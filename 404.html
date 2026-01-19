@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="0; url=/Qoutes/" />
+    <title>Redirecting…</title>
+  </head>
+  <body>
+    <p>Not found. Redirecting to app… <a href="/Qoutes/">Go now</a>.</p>
+    <script>
+      // JS fallback for browsers that ignore meta refresh
+      var base = '/Qoutes/';
+      if (location.pathname.indexOf(base) !== 0) {
+        location.replace(base);
+      }
+    </script>
+  </body>
+</html>
