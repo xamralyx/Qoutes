@@ -9,6 +9,7 @@ export function useQuotes() {
   const [quotes, setQuotes] = useState([]);
   useEffect(() => setQuotes(SAMPLE_QUOTES), []);
   const toggleFavorite = useCallback((id) => {
+    if (!id) return;
     setQuotes((prev) => prev.map((q) => (q.id === id ? { ...q, favorite: !q.favorite } : q)));
   }, []);
   return { quotes, toggleFavorite };
