@@ -1,5 +1,7 @@
-const CACHE_NAME = 'sq-static-v1';
-const URLS_TO_CACHE = ['/', '/index.html'];
+const CACHE_NAME = 'sq-static-v2';
+// Build base-aware URLs so this works under GitHub Pages base path
+const scope = self.registration?.scope || '/';
+const URLS_TO_CACHE = [new URL('index.html', scope).toString()];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_TO_CACHE)));
@@ -10,5 +12,10 @@ self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim(
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).catch(() => caches.match('/'))));
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      if (cached) return cached;
+      return fetch(event.request).catch(() => caches.match(new URL('index.html', scope).toString()));
+    })
+  );
 });
