@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
+import { parseJsonSafe } from '../utils/json';
 const STORAGE_KEY = 'sq:favorites:v1';
 
 export function useFavorites() {
   const [favorites, setFavorites] = useState(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : {};
+      return raw ? parseJsonSafe(raw, {}) : {};
     } catch {
       return {};
     }
