@@ -1,14 +1,14 @@
 export async function shareQuote({ text, author }) {
   const message = `${text} — ${author}`;
   try {
-    if (navigator.share) {
+    if (typeof navigator !== 'undefined' && navigator.share) {
       await navigator.share({
         title: 'DailySpark Quote',
         text: message,
       });
       return { ok: true, method: 'web-share' };
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
+    if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
       await navigator.clipboard.writeText(message);
       alert('Quote copied to clipboard!');
       return { ok: true, method: 'clipboard' };
