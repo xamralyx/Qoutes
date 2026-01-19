@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function CategoryFilter({ categories = [], value, onChange }) {
   return (
@@ -10,3 +11,15 @@ export default function CategoryFilter({ categories = [], value, onChange }) {
     </div>
   );
 }
+
+CategoryFilter.propTypes = {
+  categories: PropTypes.arrayOf(PropTypes.string),
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+};
+
+CategoryFilter.defaultProps = {
+  categories: [],
+  value: null,
+  onChange: undefined,
+};

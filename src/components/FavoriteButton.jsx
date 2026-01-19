@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function FavoriteButton({ id, isFav, onToggle }) {
   return (
@@ -17,3 +18,14 @@ export default function FavoriteButton({ id, isFav, onToggle }) {
     </button>
   );
 }
+
+FavoriteButton.propTypes = {
+  id: PropTypes.string.isRequired,
+  isFav: PropTypes.bool,
+  onToggle: PropTypes.func,
+};
+
+FavoriteButton.defaultProps = {
+  isFav: false,
+  onToggle: undefined,
+};

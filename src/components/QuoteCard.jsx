@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function QuoteCard({ id, text, author, onFavorite }) {
   return (
@@ -13,3 +14,16 @@ export default function QuoteCard({ id, text, author, onFavorite }) {
     </article>
   );
 }
+
+QuoteCard.propTypes = {
+  id: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  author: PropTypes.string,
+  onFavorite: PropTypes.func,
+};
+
+QuoteCard.defaultProps = {
+  id: undefined,
+  author: '—',
+  onFavorite: undefined,
+};
