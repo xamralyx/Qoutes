@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://xamralyx.github.io/Qoutes/sitemap.xml
