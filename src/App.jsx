@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { QUOTES, makeShuffledOrder } from './utils/quoteShuffle'
 import { validateQuotes } from './utils/validation'
 import { shareQuote } from './utils/shareQuote'
+import { copyText } from './utils/clipboard'
 
 const SAFE_QUOTES = validateQuotes(QUOTES)
 
@@ -9,6 +10,7 @@ export default function App() {
   const [order, setOrder] = useState(() => makeShuffledOrder(SAFE_QUOTES.length || 1))
   const [index, setIndex] = useState(0)
   const quote = useMemo(() => SAFE_QUOTES[order[index]] || { text: 'No quotes available', author: '—' }, [order, index])
+  const [status, setStatus] = useState('')
 
   useEffect(() => {
     // placeholder: could load remote or personalized quotes here
@@ -37,7 +39,7 @@ export default function App() {
           <p className="quote">"{quote.text}"</p>
           <p className="author">— {quote.author}</p>
           <div className="actions">
-            <button onClick={() => navigator.clipboard?.writeText(`${quote.text} — ${quote.author}`)}>Copy</button>
+            <button onClick={async () => { const ok = await copyText(`${quote.text} — ${quote.author}`); setStatus(ok ? 'Copied to clipboard' : 'Copy failed'); setTimeout(() => setStatus(''), 1500); }}>Copy</button>
             <button onClick={() => shareQuote(quote)}>Share</button>
             <button onClick={shuffleNext}>Shuffle</button>
           </div>
@@ -46,6 +48,7 @@ export default function App() {
       <footer>
         <small>Local demo — personalize and add notifications in the real app.</small>
       </footer>
+      <div aria-live="polite" role="status" style={{ position: 'absolute', left: -9999 }}>{status}</div>
     </div>
   )
 }
