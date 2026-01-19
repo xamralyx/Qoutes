@@ -4,7 +4,9 @@ export async function copyText(text) {
       await navigator.clipboard.writeText(text);
       return true;
     }
-  } catch {}
+  } catch (e) {
+    // ignore clipboard errors
+  }
   try {
     const textarea = document.createElement('textarea');
     textarea.value = text;
@@ -16,7 +18,7 @@ export async function copyText(text) {
     const ok = document.execCommand('copy');
     document.body.removeChild(textarea);
     return !!ok;
-  } catch {
+  } catch (e) {
     return false;
   }
 }

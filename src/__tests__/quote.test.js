@@ -23,7 +23,7 @@ describe('QuoteCard & FavoriteButton', () => {
     const onToggle = vi.fn();
     // Ensure previous renders don't leak into this test
     cleanup();
-    const { getByRole, getByLabelText } = render(
+    const { getByLabelText } = render(
       React.createElement(FavoriteButton, { id: 'q1', isFav: true, onToggle })
     );
     const btn = getByLabelText('unfavorite quote');

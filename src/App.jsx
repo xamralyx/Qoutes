@@ -36,7 +36,7 @@ export default function App() {
       </header>
       <main>
         <div className="quote-card">
-          <p className="quote">"{quote.text}"</p>
+          <p className="quote">{quote.text}</p>
           <p className="author">— {quote.author}</p>
           <div className="actions">
             <button onClick={async () => { const ok = await copyText(`${quote.text} — ${quote.author}`); setStatus(ok ? 'Copied to clipboard' : 'Copy failed'); setTimeout(() => setStatus(''), 1500); }}>Copy</button>

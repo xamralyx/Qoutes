@@ -9,6 +9,8 @@ export function trackEvent(name, props = {}) {
       window.plausible(name, { props: safeProps });
       return true;
     }
-  } catch {}
+  } catch (e) {
+    // ignore analytics errors
+  }
   return false;
 }

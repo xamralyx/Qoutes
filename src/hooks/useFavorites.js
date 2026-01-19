@@ -13,7 +13,11 @@ export function useFavorites() {
   });
 
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites)); } catch {}
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+    } catch (e) {
+      // ignore storage write errors
+    }
   }, [favorites]);
 
   const isFavorite = useCallback((id) => !!favorites[id], [favorites]);
